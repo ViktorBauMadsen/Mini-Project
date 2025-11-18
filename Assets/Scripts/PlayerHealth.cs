@@ -1,25 +1,111 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
+using System.Collections.Generic;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHealth = 5;
-    public int currentHealth;
-    public GameObject defeatUI; // Assign your Defeat Canvas here
+    [Header("Health")]
+    public int maxHealth = 5;         // total health in "HP"
+    public int currentHealth;         // HP changes
+    public int healthPerHeart = 2;    // 2 = full heart
 
+    [Header("UI")]
+    public GameObject defeatUI;
+    public Image damageFlashImage;
+
+    [Header("Hearts UI")]
+    public GameObject heartPrefab;        // assign your Heart prefab
+    public Transform heartsContainer;     // where hearts will appear
+    public Sprite fullHeart;
+    public Sprite halfHeart;
+    public Sprite emptyHeart;
+
+    [Header("Damage Flash Settings")]
+    public float flashFadeSpeed = 5f;
+    public float flashMaxAlpha = 0.35f;
+
+    private float flashAlpha = 0f;
     private bool isDead = false;
-    private PlayerMovement movement; // Reference to disable movement
+
+    private PlayerMovement movement;
+    private List<Image> heartImages = new List<Image>();
+
 
     void Start()
     {
         currentHealth = maxHealth;
 
-        // Hide defeat UI on start
         if (defeatUI != null)
             defeatUI.SetActive(false);
 
-        // Get movement script
+        // reset flash alpha
+        if (damageFlashImage != null)
+        {
+            Color c = damageFlashImage.color;
+            c.a = 0;
+            damageFlashImage.color = c;
+        }
+
         movement = GetComponent<PlayerMovement>();
+
+        CreateHearts();
+        UpdateHeartsUI();
+    }
+
+    void CreateHearts()
+    {
+        int heartCount = Mathf.CeilToInt(maxHealth / (float)healthPerHeart);
+
+        for (int i = 0; i < heartCount; i++)
+        {
+            GameObject h = Instantiate(heartPrefab, heartsContainer);
+            Image img = h.GetComponent<Image>();
+            heartImages.Add(img);
+        }
+    }
+
+    void UpdateHeartsUI()
+    {
+        int hp = currentHealth;
+
+        for (int i = 0; i < heartImages.Count; i++)
+        {
+            if (hp >= healthPerHeart)
+            {
+                heartImages[i].sprite = fullHeart;
+            }
+            else if (hp == 1)
+            {
+                heartImages[i].sprite = halfHeart;
+            }
+            else
+            {
+                heartImages[i].sprite = emptyHeart;
+            }
+
+            hp -= healthPerHeart;
+        }
+    }
+
+
+    void Update()
+    {
+        if (flashAlpha > 0)
+        {
+            flashAlpha -= Time.unscaledDeltaTime * flashFadeSpeed;
+            flashAlpha = Mathf.Clamp01(flashAlpha);
+
+            Color c = damageFlashImage.color;
+            c.a = flashAlpha * flashMaxAlpha;
+            damageFlashImage.color = c;
+        }
+
+        if (isDead && Input.GetKeyDown(KeyCode.R))
+        {
+            RestartGame();
+        }
     }
 
     public void TakeDamage(int amount)
@@ -27,6 +113,9 @@ public class PlayerHealth : MonoBehaviour
         if (isDead) return;
 
         currentHealth -= amount;
+        flashAlpha = 1f;
+
+        UpdateHeartsUI(); // ❤️ NEW
 
         if (currentHealth <= 0)
         {
@@ -38,43 +127,23 @@ public class PlayerHealth : MonoBehaviour
     {
         isDead = true;
 
-        // Freeze world time
         Time.timeScale = 0f;
 
-        // Show defeat UI
         if (defeatUI != null)
             defeatUI.SetActive(true);
 
-        // Disable player movement & camera look
         if (movement != null)
             movement.FreezePlayer();
 
-        // Keep cursor LOCKED + HIDDEN for consistency
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
-        Debug.Log("Player died. Press R to restart.");
-    }
-
-    void Update()
-    {
-        // Allow R restart after death
-        if (isDead && Input.GetKeyDown(KeyCode.R))
-        {
-            RestartGame();
-        }
     }
 
     void RestartGame()
     {
-        // Unfreeze time
         Time.timeScale = 1f;
-
-        // Lock & hide cursor for gameplay
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
-        // Reload scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
