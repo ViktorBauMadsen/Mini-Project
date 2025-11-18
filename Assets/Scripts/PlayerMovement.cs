@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,26 +20,46 @@ public class PlayerMovement : MonoBehaviour
     private float rotationX = 0;
     private CharacterController characterController;
 
-    private bool canMove = true;
+    private bool canMove = true; // <-- determines if movement+look are allowed
+    private bool isFrozen = false; // <-- new flag for defeat UI
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-
     }
+
     void OnEnable()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+
     void OnDisable()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
 
+    // ---------------------------------------------------
+    // 🔥 NEW METHOD — Call this when the player dies
+    // ---------------------------------------------------
+    public void FreezePlayer()
+    {
+        isFrozen = true;
+        canMove = false;
+
+        // Keep cursor hidden & locked for consistency
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+    // ---------------------------------------------------
+
     void Update()
     {
+        // If frozen (defeat UI active), DO NOTHING
+        if (isFrozen)
+            return;
+
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
@@ -68,7 +88,6 @@ public class PlayerMovement : MonoBehaviour
             characterController.height = crouchHeight;
             walkSpeed = crouchSpeed;
             runSpeed = crouchSpeed;
-
         }
         else
         {
