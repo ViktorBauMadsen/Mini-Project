@@ -1269,7 +1269,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerShooting
   projectilePrefab: {fileID: 8969612226608348675, guid: 0aec25b6475c54642915e1f7cdbd082b, type: 3}
   shootPoint: {fileID: 1627096153}
+  playerCamera: {fileID: 330585545}
   projectileSpeed: 20
+  rotationOffset: {x: 90, y: 0, z: 0}
 --- !u!114 &732011645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1290,7 +1292,7 @@ MonoBehaviour:
   heartPrefab: {fileID: 2122201552338358865, guid: c83faad77e743e346aeeb1db3538f9c9, type: 3}
   heartsContainer: {fileID: 409602293}
   fullHeart: {fileID: 21300000, guid: 10a1fc556159aaf40a9fad21a2ba8cd9, type: 3}
-  halfHeart: {fileID: 21300000, guid: 96750c4eb6f3ce447af83165ef2c7c4f, type: 3}
+  halfHeart: {fileID: 21300000, guid: b637138b7c773e34f9f5dd8953e737a4, type: 3}
   emptyHeart: {fileID: 21300000, guid: a4236b2c2c2ef4d4dad642ed443503e5, type: 3}
   flashFadeSpeed: 5
   flashMaxAlpha: 0.35
@@ -1996,7 +1998,7 @@ Transform:
   m_GameObject: {fileID: 1138329628}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.06, y: 10.79, z: -3.62}
+  m_LocalPosition: {x: 11.06, y: 22.12, z: -3.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2362,7 +2364,7 @@ Transform:
   m_GameObject: {fileID: 1469590956}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.36, y: 12.55, z: 11.64}
+  m_LocalPosition: {x: -9.36, y: 22.13, z: 11.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
