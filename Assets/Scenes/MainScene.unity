@@ -275,7 +275,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaveManager
   enemyPrefab: {fileID: 7267484591882477424, guid: 3f3f84a6f18bd2445af8508bf19beb07, type: 3}
-  enemyHealthBarPrefab: {fileID: 3741299242584195163, guid: c9030edfbbac0ff4286570c9a5a26e0d, type: 3}
   spawnPoints:
   - {fileID: 608428937}
   - {fileID: 1058881901}
@@ -283,7 +282,6 @@ MonoBehaviour:
   - {fileID: 1587843280}
   timeBetweenWaves: 20
   waveText: {fileID: 1344731689}
-  enemiesKilledText: {fileID: 2044203753}
 --- !u!1 &134625427
 GameObject:
   m_ObjectHideFlags: 0
@@ -2801,7 +2799,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c3e8ccec19ee9d4aa1076a4e4d3444e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
-  score: 0
   scoreText: {fileID: 2044203753}
 --- !u!4 &1767048801
 Transform:
