@@ -3,57 +3,56 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    private NavMeshAgent agent;
-    private Transform player;
-    private PlayerHealth playerHealth;
-
-    [Header("Attack Settings")]
     public int damage = 1;
     public float attackRange = 1.5f;
-    public float attackCooldown = 1.0f;
+    public float attackCooldown = 1f;
 
-    private float lastAttackTime = 0f;
+    private float nextAttackTime;
+    private Animator anim;
+    private NavMeshAgent agent;
+    private Transform player;
 
-    private void Start()
+    void Awake()
     {
+        player = GameObject.FindWithTag("Player").transform;
+        anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-
-        GameObject p = GameObject.FindWithTag("Player");
-        if (p != null)
-        {
-            player = p.transform;
-            playerHealth = p.GetComponent<PlayerHealth>();
-        }
     }
 
-    private void Update()
+    void Update()
     {
-        if (player == null || agent == null)
-            return;
+        if (player == null) return;
 
-        // ---- MOVEMENT (your original logic) ----
-        agent.SetDestination(player.position);
-
-        // ---- ATTACK LOGIC ----
         float dist = Vector3.Distance(transform.position, player.position);
 
-        if (dist <= attackRange)
+        if (dist > attackRange)
         {
-            TryAttack();
+            anim.SetBool("isAttacking", false);
+            agent.isStopped = false;
+            agent.SetDestination(player.position);
+            return;
+        }
+
+        // Stop moving to attack
+        agent.isStopped = true;
+
+        // Attack EXACTLY when cooldown is ready
+        if (Time.time >= nextAttackTime)
+        {
+            anim.SetBool("isAttacking", true);   // Play animation
+            nextAttackTime = Time.time + attackCooldown;  // Start cooldown
         }
     }
 
-    void TryAttack()
+    // Animation Event
+    public void DealDamage()
     {
-        if (Time.time >= lastAttackTime + attackCooldown)
+        if (Vector3.Distance(transform.position, player.position) <= attackRange)
         {
-            lastAttackTime = Time.time;
-
-            if (playerHealth != null)
-            {
-                playerHealth.TakeDamage(damage);
-                Debug.Log("Enemy attacked player!");
-            }
+            player.GetComponent<PlayerHealth>().TakeDamage(damage);
         }
+
+        // Reset attack animation immediately for next attack
+        anim.SetBool("isAttacking", false);
     }
 }
