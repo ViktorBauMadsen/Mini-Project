@@ -9,7 +9,7 @@ public class EnemyAI : MonoBehaviour
 
     private float nextAttackTime;
     private Animator anim;
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
     private Transform player;
 
     void Awake()

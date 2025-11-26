@@ -1,49 +1,76 @@
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
+using TMPro;
 
 public class WaveManager : MonoBehaviour
 {
+    [Header("Wave Settings")]
     public GameObject enemyPrefab;
     public Transform[] spawnPoints;
+    public float timeBetweenWaves = 20f;
 
-    public float timeBetweenWaves = 3f;
-    public int enemiesPerWave = 3;
+    [Header("UI")]
+    public TextMeshProUGUI waveText;
 
-    private int waveNumber = 0;
-    private bool spawningWave = false;
+    private int currentWave = 0;
+    private float waveTimer = 0f;
+    private List<GameObject> aliveEnemies = new List<GameObject>();
 
-    private void Update()
+    void Start()
     {
-        // If no enemies exist, start next wave
-        if (!spawningWave && GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+        StartNewWave();
+    }
+
+    void Update()
+    {
+        // Check if all enemies are dead
+        aliveEnemies.RemoveAll(e => e == null);
+
+        waveTimer += Time.deltaTime;
+
+        if (aliveEnemies.Count == 0 || waveTimer >= timeBetweenWaves)
         {
-            StartCoroutine(SpawnWave());
+            StartNewWave();
         }
     }
 
-    IEnumerator SpawnWave()
+    void StartNewWave()
     {
-        spawningWave = true;
-        waveNumber++;
+        currentWave++;
+        waveTimer = 0f;
 
-        int enemiesToSpawn = enemiesPerWave + (waveNumber - 1);
+        waveText.text = $"Wave: {currentWave}";
 
-        Debug.Log("Spawning Wave " + waveNumber + " with " + enemiesToSpawn + " enemies");
+        int enemiesToSpawn = 2 + currentWave; // waves get harder
+
+        // Movement bonus per wave
+        float speedBonus = currentWave * 0.1f;
 
         for (int i = 0; i < enemiesToSpawn; i++)
         {
-            SpawnEnemy();
-            yield return new WaitForSeconds(0.3f); // small delay between each enemy
+            Transform randomSpawn = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            GameObject enemy = Instantiate(enemyPrefab, randomSpawn.position, Quaternion.identity);
+
+            aliveEnemies.Add(enemy);
+
+            EnemyAI ai = enemy.GetComponent<EnemyAI>();
+            if (ai != null && ai.agent != null)
+            {
+                ai.agent.speed += speedBonus;
+            }
+
+            // Every 5 waves → +1 health
+            EnemyHealth hp = enemy.GetComponent<EnemyHealth>();
+            if (hp != null)
+            {
+                if (currentWave % 5 == 0)
+                    hp.maxHealth++;
+
+                hp.currentHealth = hp.maxHealth;
+            }
         }
 
-        yield return new WaitForSeconds(timeBetweenWaves);
-
-        spawningWave = false;
-    }
-
-    void SpawnEnemy()
-    {
-        Transform point = spawnPoints[Random.Range(0, spawnPoints.Length)];
-        Instantiate(enemyPrefab, point.position, Quaternion.identity);
+        Debug.Log($"Starting wave {currentWave} with {enemiesToSpawn} zombies");
     }
 }
