@@ -4,10 +4,10 @@ public class PlayerShooting : MonoBehaviour
 {
     public GameObject projectilePrefab;
     public Transform shootPoint;
-    public Camera playerCamera;     // <-- add this!
+    public Camera playerCamera;
     public float projectileSpeed = 20f;
 
-    public Vector3 rotationOffset;  // Allow fixing prefab orientation
+    public Vector3 rotationOffset;  // Allows fixing prefab orientation (e.g., X = 90)
 
     private void Update()
     {
@@ -19,13 +19,17 @@ public class PlayerShooting : MonoBehaviour
 
     void Shoot()
     {
-        // rotation the bullet should have (where the player is looking)
-        Quaternion finalRot = playerCamera.transform.rotation * Quaternion.Euler(rotationOffset);
+        // Apply camera rotation + your rotation offset (world-space)
+        Quaternion finalRot = Quaternion.Euler(
+            playerCamera.transform.eulerAngles.x + rotationOffset.x,
+            playerCamera.transform.eulerAngles.y + rotationOffset.y,
+            playerCamera.transform.eulerAngles.z + rotationOffset.z
+        );
 
-        // spawn bullet facing camera direction
+        // Spawn projectile
         GameObject bullet = Instantiate(projectilePrefab, shootPoint.position, finalRot);
 
-        // give it forward velocity in its own forward direction
+        // Add forward velocity (using its own forward direction)
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
         {
