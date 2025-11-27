@@ -5,7 +5,7 @@ public class EnemyHealthBarUI : MonoBehaviour
 {
     public EnemyHealth enemy;
     public Image fillImage;
-    public Vector3 offset = new Vector3(0, 2.2f, 0);
+    public Vector3 offset = new Vector3(0, 0.1f, 0);
 
     private Camera cam;
 

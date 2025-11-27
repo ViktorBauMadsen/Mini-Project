@@ -1351,7 +1351,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 8969612226608348675, guid: 0aec25b6475c54642915e1f7cdbd082b, type: 3}
   shootPoint: {fileID: 1627096153}
   playerCamera: {fileID: 330585545}
-  projectileSpeed: 20
+  projectileSpeed: 50
   rotationOffset: {x: 0, y: 0, z: 0}
   gunTransform: {fileID: 1818298428}
   recoilDistance: 0.1
