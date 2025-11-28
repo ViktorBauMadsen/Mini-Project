@@ -20,12 +20,18 @@ public class PlayerMovement : MonoBehaviour
     private float rotationX = 0;
     private CharacterController characterController;
 
-    private bool canMove = true; // <-- determines if movement+look are allowed
-    private bool isFrozen = false; // <-- new flag for defeat UI
+    private bool canMove = true;
+    private bool isFrozen = false;
+
+    // 🔥 NEW
+    private Animator anim;
 
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+
+        // 🔥 Get the Animator inside MafiaBoss child
+        anim = GetComponentInChildren<Animator>();
     }
 
     void OnEnable()
@@ -40,23 +46,21 @@ public class PlayerMovement : MonoBehaviour
         Cursor.visible = true;
     }
 
-    // ---------------------------------------------------
-    // 🔥 NEW METHOD — Call this when the player dies
-    // ---------------------------------------------------
     public void FreezePlayer()
     {
         isFrozen = true;
         canMove = false;
 
-        // Keep cursor hidden & locked for consistency
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        // Stop animations when frozen
+        if (anim != null)
+            anim.SetBool("IsMoving", false);
     }
-    // ---------------------------------------------------
 
     void Update()
     {
-        // If frozen (defeat UI active), DO NOTHING
         if (isFrozen)
             return;
 
@@ -66,6 +70,13 @@ public class PlayerMovement : MonoBehaviour
         bool isRunning = Input.GetKey(KeyCode.LeftShift);
         float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
+
+        // 🔥 ANIMATION LOGIC
+        bool isMoving = (Mathf.Abs(curSpeedX) > 0.1f || Mathf.Abs(curSpeedY) > 0.1f);
+
+        if (anim != null)
+            anim.SetBool("IsMoving", isMoving);
+
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
@@ -103,6 +114,7 @@ public class PlayerMovement : MonoBehaviour
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
     }
