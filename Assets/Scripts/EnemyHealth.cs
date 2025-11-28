@@ -5,6 +5,8 @@ public class EnemyHealth : MonoBehaviour
     public int maxHealth = 3;
     [HideInInspector] public int currentHealth;
 
+    public bool isBoss = false;
+
     public GameObject healthBarPrefab;
     private EnemyHealthBarUI healthBarUI;
 
@@ -37,14 +39,12 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die()
     {
-        // ⭐ ADD SCORE HERE ⭐
+        // Add score
         ScoreManager.Instance.AddScore(1);
 
-        // Remove health bar
         if (healthBarUI != null)
             Destroy(healthBarUI.gameObject);
 
-        // Remove enemy
         Destroy(gameObject);
     }
 }

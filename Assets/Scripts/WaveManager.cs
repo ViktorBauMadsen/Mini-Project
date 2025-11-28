@@ -5,10 +5,16 @@ using TMPro;
 
 public class WaveManager : MonoBehaviour
 {
-    [Header("Wave Settings")]
+    [Header("Normal Enemy Settings")]
     public GameObject enemyPrefab;
     public Transform[] spawnPoints;
     public float timeBetweenWaves = 20f;
+
+    [Header("Boss Settings")]
+    public GameObject bossPrefab;
+    public int bossInterval = 5;
+    public int bossBaseHealth = 10;
+    public int bossHealthPerWave = 2;
 
     [Header("UI")]
     public TextMeshProUGUI waveText;
@@ -24,11 +30,12 @@ public class WaveManager : MonoBehaviour
 
     void Update()
     {
-        // Check if all enemies are dead
+        // Remove references to dead enemies
         aliveEnemies.RemoveAll(e => e == null);
 
         waveTimer += Time.deltaTime;
 
+        // Start next wave if all enemies died OR timer hit max
         if (aliveEnemies.Count == 0 || waveTimer >= timeBetweenWaves)
         {
             StartNewWave();
@@ -42,11 +49,13 @@ public class WaveManager : MonoBehaviour
 
         waveText.text = $"Wave: {currentWave}";
 
-        int enemiesToSpawn = 2 + currentWave; // waves get harder
+        int enemiesToSpawn = 2 + currentWave; // normal wave scaling
 
-        // Movement bonus per wave
         float speedBonus = currentWave * 0.1f;
 
+        // -------------------------
+        // Spawn normal enemies
+        // -------------------------
         for (int i = 0; i < enemiesToSpawn; i++)
         {
             Transform randomSpawn = spawnPoints[Random.Range(0, spawnPoints.Length)];
@@ -56,14 +65,12 @@ public class WaveManager : MonoBehaviour
 
             EnemyAI ai = enemy.GetComponent<EnemyAI>();
             if (ai != null && ai.agent != null)
-            {
                 ai.agent.speed += speedBonus;
-            }
 
-            // Every 5 waves → +1 health
             EnemyHealth hp = enemy.GetComponent<EnemyHealth>();
             if (hp != null)
             {
+                // Normal scaling
                 if (currentWave % 5 == 0)
                     hp.maxHealth++;
 
@@ -71,6 +78,36 @@ public class WaveManager : MonoBehaviour
             }
         }
 
-        Debug.Log($"Starting wave {currentWave} with {enemiesToSpawn} zombies");
+        // -------------------------
+        // Spawn BOSS every X waves
+        // -------------------------
+        if (currentWave % bossInterval == 0)
+        {
+            SpawnBoss();
+        }
+
+        Debug.Log($"Starting wave {currentWave} with {enemiesToSpawn} zombies.");
+    }
+
+    void SpawnBoss()
+    {
+        Transform randomSpawn = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        GameObject boss = Instantiate(bossPrefab, randomSpawn.position, Quaternion.identity);
+
+        aliveEnemies.Add(boss);
+
+        EnemyAI ai = boss.GetComponent<EnemyAI>();
+        if (ai != null && ai.agent != null)
+            ai.agent.speed += currentWave * 0.1f;
+
+        EnemyHealth hp = boss.GetComponent<EnemyHealth>();
+        if (hp != null)
+        {
+            hp.isBoss = true;
+            hp.maxHealth = bossBaseHealth + (currentWave * bossHealthPerWave);
+            hp.currentHealth = hp.maxHealth;
+        }
+
+        Debug.Log($"BOSS SPAWNED with {hp.maxHealth} HP!");
     }
 }

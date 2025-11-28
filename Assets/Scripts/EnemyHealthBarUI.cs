@@ -5,6 +5,8 @@ public class EnemyHealthBarUI : MonoBehaviour
 {
     public EnemyHealth enemy;
     public Image fillImage;
+
+    // Default offset works for normal zombies
     public Vector3 offset = new Vector3(0, 0.1f, 0);
 
     private Camera cam;
@@ -28,7 +30,14 @@ public class EnemyHealthBarUI : MonoBehaviour
             return;
         }
 
-        transform.position = enemy.transform.position + offset;
+        // Automatically scale health bar height with enemy size
+        Vector3 scaledOffset = new Vector3(
+            offset.x,
+            offset.y * enemy.transform.localScale.y,
+            offset.z
+        );
+
+        transform.position = enemy.transform.position + scaledOffset;
 
         transform.LookAt(transform.position + cam.transform.forward);
     }

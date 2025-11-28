@@ -33,18 +33,15 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
-        // Stop moving to attack
         agent.isStopped = true;
 
-        // Attack EXACTLY when cooldown is ready
         if (Time.time >= nextAttackTime)
         {
-            anim.SetBool("isAttacking", true);   // Play animation
-            nextAttackTime = Time.time + attackCooldown;  // Start cooldown
+            anim.SetBool("isAttacking", true);
+            nextAttackTime = Time.time + attackCooldown;
         }
     }
 
-    // Animation Event
     public void DealDamage()
     {
         if (Vector3.Distance(transform.position, player.position) <= attackRange)
@@ -52,7 +49,6 @@ public class EnemyAI : MonoBehaviour
             player.GetComponent<PlayerHealth>().TakeDamage(damage);
         }
 
-        // Reset attack animation immediately for next attack
         anim.SetBool("isAttacking", false);
     }
 }

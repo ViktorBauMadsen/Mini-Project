@@ -685,6 +685,10 @@ MonoBehaviour:
   - {fileID: 853738061}
   - {fileID: 1587843280}
   timeBetweenWaves: 20
+  bossPrefab: {fileID: 7267484591882477424, guid: 57b97bfc1622e8c4381d78ab92ed4bb7, type: 3}
+  bossInterval: 5
+  bossBaseHealth: 10
+  bossHealthPerWave: 2
   waveText: {fileID: 1344731689}
 --- !u!1 &134625427
 GameObject:
@@ -2772,8 +2776,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Wave
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3708,8 +3712,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Enemies Killed: 0'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3733,8 +3737,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 150
+  m_fontSizeBase: 150
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3801,8 +3805,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1443.8845, y: -952}
-  m_SizeDelta: {x: 856.0047, y: 158.3188}
+  m_AnchoredPosition: {x: -1423, y: -983.51}
+  m_SizeDelta: {x: 935.9048, y: 163.0188}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2076271947
 GameObject:
