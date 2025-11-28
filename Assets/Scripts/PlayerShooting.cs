@@ -11,6 +11,10 @@ public class PlayerShooting : MonoBehaviour
 
     public Vector3 rotationOffset;
 
+    [Header("Fire Rate")]
+    public float fireRate = 0.1f; // seconds between shots
+    private float nextShootTime = 0f;
+
     [Header("Recoil Settings")]
     public Transform gunTransform;
     public float recoilDistance = 0.1f;
@@ -33,8 +37,10 @@ public class PlayerShooting : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        // HOLD LEFT CLICK + respects fireRate
+        if (Input.GetMouseButton(0) && Time.time >= nextShootTime)
         {
+            nextShootTime = Time.time + fireRate;
             Shoot();
         }
     }

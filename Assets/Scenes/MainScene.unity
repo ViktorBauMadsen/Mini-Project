@@ -1721,6 +1721,7 @@ MonoBehaviour:
   playerCamera: {fileID: 330585545}
   projectileSpeed: 50
   rotationOffset: {x: 0, y: 0, z: 0}
+  fireRate: 0.2
   gunTransform: {fileID: 1818298428}
   recoilDistance: 0.1
   recoilSpeed: 50
