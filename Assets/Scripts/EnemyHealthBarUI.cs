@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyHealthBarUI : MonoBehaviour
@@ -6,8 +6,9 @@ public class EnemyHealthBarUI : MonoBehaviour
     public EnemyHealth enemy;
     public Image fillImage;
 
-    // Default offset works for normal zombies
     public Vector3 offset = new Vector3(0, 0.1f, 0);
+
+    public GameObject bossLabel; // Assign BOSSText here
 
     private Camera cam;
 
@@ -19,7 +20,12 @@ public class EnemyHealthBarUI : MonoBehaviour
         {
             Debug.LogError("EnemyHealthBarUI has no enemy assigned!");
             Destroy(gameObject);
+            return;
         }
+
+        // ENABLE boss text only for bosses
+        if (bossLabel != null)
+            bossLabel.SetActive(enemy.isBoss);
     }
 
     void Update()
@@ -30,7 +36,7 @@ public class EnemyHealthBarUI : MonoBehaviour
             return;
         }
 
-        // Automatically scale health bar height with enemy size
+        // Auto-scale height based on zombie size
         Vector3 scaledOffset = new Vector3(
             offset.x,
             offset.y * enemy.transform.localScale.y,
@@ -38,7 +44,6 @@ public class EnemyHealthBarUI : MonoBehaviour
         );
 
         transform.position = enemy.transform.position + scaledOffset;
-
         transform.LookAt(transform.position + cam.transform.forward);
     }
 

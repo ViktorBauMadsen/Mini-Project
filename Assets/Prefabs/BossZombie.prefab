@@ -191,6 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 3
   currentHealth: 0
+  isBoss: 1
   healthBarPrefab: {fileID: 3741299242584195163, guid: c9030edfbbac0ff4286570c9a5a26e0d, type: 3}
 --- !u!136 &1065961383537427008
 CapsuleCollider:

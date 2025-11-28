@@ -851,7 +851,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -1732,7 +1732,7 @@ MonoBehaviour:
   returnSpeed: 50
   audioSource: {fileID: 1818298429}
   shootSound: {fileID: 8300000, guid: 75ae2e0cd367ca74b8b7907ab05dca78, type: 3}
-  shootVolume: 0.4
+  shootVolume: 0.3
 --- !u!114 &732011645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2617,7 +2617,7 @@ GameObject:
   - component: {fileID: 1241878800}
   - component: {fileID: 1241878799}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: Mirror
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2709,14 +2709,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1241878798}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 24.72, y: 4.6222, z: 1.8162}
-  m_LocalScale: {x: 1.9859974, y: 1, z: 0.80313367}
+  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 24.72, y: 5.89, z: -0.27}
+  m_LocalScale: {x: 0.8094925, y: 1, z: 1.0098603}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2009953837}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 90}
 --- !u!1 &1344731687
 GameObject:
   m_ObjectHideFlags: 0
@@ -3571,7 +3571,7 @@ Transform:
   m_GameObject: {fileID: 2009953836}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.13, y: 0, z: 1.84}
+  m_LocalPosition: {x: -0.13, y: 0, z: -2.59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3654,7 +3654,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 65
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
