@@ -1727,7 +1727,7 @@ MonoBehaviour:
   returnSpeed: 50
   audioSource: {fileID: 1818298429}
   shootSound: {fileID: 8300000, guid: 75ae2e0cd367ca74b8b7907ab05dca78, type: 3}
-  shootVolume: 0.2
+  shootVolume: 0.4
 --- !u!114 &732011645
 MonoBehaviour:
   m_ObjectHideFlags: 0
