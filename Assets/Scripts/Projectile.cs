@@ -3,10 +3,12 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float lifetime = 3f;
+    public static int defaultDamage = 1;   // <--- ADD THIS
     public int damage = 1;
 
     private void Start()
     {
+        damage = defaultDamage;            // <--- ADD THIS
         Destroy(gameObject, lifetime);
     }
 
