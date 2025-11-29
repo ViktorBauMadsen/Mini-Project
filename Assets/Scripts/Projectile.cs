@@ -3,12 +3,18 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public float lifetime = 3f;
-    public static int defaultDamage = 1;   // <--- ADD THIS
+
+    // GLOBAL DAMAGE VALUE that powerup will modify
+    public static int defaultDamage = 1;
+
+    // Local per-projectile value
     public int damage = 1;
 
     private void Start()
     {
-        damage = defaultDamage;            // <--- ADD THIS
+        // Set projectile damage from the global damage
+        damage = defaultDamage;
+
         Destroy(gameObject, lifetime);
     }
 

@@ -21,28 +21,33 @@ public class PowerupPickup : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         PlayerShooting shooting = other.GetComponent<PlayerShooting>();
+
         if (shooting != null)
         {
             StartCoroutine(ApplyBoost(shooting));
         }
 
-        Destroy(gameObject); // consume pickup
+        Destroy(gameObject);
     }
 
     private IEnumerator ApplyBoost(PlayerShooting shooting)
     {
-        // Save original values
-        int originalDamage = Projectile.defaultDamage;
-        float originalFireRate = shooting.fireRate;
+        Debug.Log("BOOST START");
 
-        // Apply boost
+        float originalFireRate = shooting.fireRate;
+        int originalDamage = Projectile.defaultDamage;
+
+        shooting.fireRate = originalFireRate * fireRateMultiplier;
         Projectile.defaultDamage = Mathf.RoundToInt(originalDamage * damageMultiplier);
-        shooting.fireRate *= fireRateMultiplier;
+
+        Debug.Log("WAITING...");
 
         yield return new WaitForSeconds(boostDuration);
 
-        // Reset values
-        Projectile.defaultDamage = originalDamage;
+        Debug.Log("BOOST END");
+
         shooting.fireRate = originalFireRate;
+        Projectile.defaultDamage = originalDamage;
     }
+
 }

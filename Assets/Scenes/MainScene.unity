@@ -5672,6 +5672,71 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -388698936944893195, guid: fc311a4c632fde64aa84ee4f754c3a14, type: 3}
+--- !u!1001 &1309804662
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -7038498792003632460, guid: 310e5db8da8cbaf4e848455423610e23, type: 3}
+      propertyPath: boostDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7038498792003632460, guid: 310e5db8da8cbaf4e848455423610e23, type: 3}
+      propertyPath: fireRateMultiplier
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881380167128403547, guid: 310e5db8da8cbaf4e848455423610e23, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.6679115
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881380167128403547, guid: 310e5db8da8cbaf4e848455423610e23, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.74212766
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881380167128403547, guid: 310e5db8da8cbaf4e848455423610e23, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.10985136
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881380167128403547, guid: 310e5db8da8cbaf4e848455423610e23, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881380167128403547, guid: 310e5db8da8cbaf4e848455423610e23, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.000000021855694
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881380167128403547, guid: 310e5db8da8cbaf4e848455423610e23, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881380167128403547, guid: 310e5db8da8cbaf4e848455423610e23, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881380167128403547, guid: 310e5db8da8cbaf4e848455423610e23, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881380167128403547, guid: 310e5db8da8cbaf4e848455423610e23, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881380167128403547, guid: 310e5db8da8cbaf4e848455423610e23, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3222157662275441889, guid: 310e5db8da8cbaf4e848455423610e23, type: 3}
+      propertyPath: m_Name
+      value: ammo_box
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 310e5db8da8cbaf4e848455423610e23, type: 3}
 --- !u!1 &1338886021 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 346ea8ab0a1c21c4e95694bac3863161, type: 3}
@@ -9429,3 +9494,4 @@ SceneRoots:
   - {fileID: 1767048801}
   - {fileID: 1241878802}
   - {fileID: 1112008725}
+  - {fileID: 1309804662}
