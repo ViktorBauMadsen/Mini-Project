@@ -2116,15 +2116,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 37ab9a707e5eb3c46bcd02b6626a2951, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.26218987
+      value: 0.281
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 37ab9a707e5eb3c46bcd02b6626a2951, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.23413649
+      value: -0.267
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 37ab9a707e5eb3c46bcd02b6626a2951, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.502046
+      value: 0.422
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 37ab9a707e5eb3c46bcd02b6626a2951, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3397,7 +3397,7 @@ MonoBehaviour:
   playerCamera: {fileID: 330585545}
   projectileSpeed: 50
   rotationOffset: {x: 0, y: 0, z: 0}
-  fireRate: 0.2
+  fireRate: 0.1
   gunTransform: {fileID: 1818298428}
   recoilDistance: 0.1
   recoilSpeed: 50
@@ -3405,6 +3405,10 @@ MonoBehaviour:
   audioSource: {fileID: 1818298429}
   shootSound: {fileID: 8300000, guid: 75ae2e0cd367ca74b8b7907ab05dca78, type: 3}
   shootVolume: 0.3
+  normalFireRate: 0.25
+  boostedFireRate: 0.1
+  normalDamage: 1
+  boostedDamage: 2
 --- !u!114 &732011645
 MonoBehaviour:
   m_ObjectHideFlags: 0

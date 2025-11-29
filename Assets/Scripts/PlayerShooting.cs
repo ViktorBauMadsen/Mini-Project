@@ -5,6 +5,7 @@ public class PlayerShooting : MonoBehaviour
 {
     [Header("Boost UI")]
     public GameObject boostCanvas;
+
     [Header("Shooting")]
     public GameObject projectilePrefab;
     public Transform shootPoint;
@@ -14,7 +15,7 @@ public class PlayerShooting : MonoBehaviour
     public Vector3 rotationOffset;
 
     [Header("Fire Rate")]
-    public float fireRate = 0.1f; // seconds between shots
+    public float fireRate = 0.1f; // actively used during gameplay
     private float nextShootTime = 0f;
 
     [Header("Recoil Settings")]
@@ -31,10 +32,25 @@ public class PlayerShooting : MonoBehaviour
     public AudioClip shootSound;
     public float shootVolume = 1f;
 
+    // ---------------- BOOST SETTINGS ----------------
+    [Header("Boost Settings (Non-Stacking)")]
+    public float normalFireRate = 0.1f;      // default fire rate
+    public float boostedFireRate = 0.03f;    // boosted fire rate
+
+    public int normalDamage = 1;             // default bullet damage
+    public int boostedDamage = 3;            // boosted bullet damage
+
+    private bool boostActive = false;        // prevents stacking
+    // -------------------------------------------------
+
     private void Start()
     {
         if (gunTransform != null)
             gunOriginalLocalPos = gunTransform.localPosition;
+
+        // Ensure initial values are correct
+        fireRate = normalFireRate;
+        Projectile.damage = normalDamage;
     }
 
     private void Update()
@@ -49,7 +65,7 @@ public class PlayerShooting : MonoBehaviour
 
     void Shoot()
     {
-        // Apply camera rotation + your rotation offset (world-space)
+        // Apply camera rotation + offset
         Quaternion finalRot = Quaternion.Euler(
             playerCamera.transform.eulerAngles.x + rotationOffset.x,
             playerCamera.transform.eulerAngles.y + rotationOffset.y,
@@ -62,9 +78,7 @@ public class PlayerShooting : MonoBehaviour
         // Add forward velocity
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         if (rb != null)
-        {
             rb.linearVelocity = bullet.transform.forward * projectileSpeed;
-        }
 
         // Trigger recoil
         if (!isRecoiling && gunTransform != null)
@@ -106,4 +120,41 @@ public class PlayerShooting : MonoBehaviour
         gunTransform.localPosition = gunOriginalLocalPos;
         isRecoiling = false;
     }
+
+    // ---------------- BOOST FUNCTIONALITY ----------------
+
+    public void ActivateBoost(float duration)
+    {
+        // Prevent stacking
+        if (boostActive)
+            return;
+
+        boostActive = true;
+
+        // Apply boosted stats
+        fireRate = boostedFireRate;
+        Projectile.damage = boostedDamage;
+
+        // Enable UI
+        if (boostCanvas != null)
+            boostCanvas.SetActive(true);
+
+        StartCoroutine(BoostTimer(duration));
+    }
+
+    private IEnumerator BoostTimer(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        // Reset to original stats
+        boostActive = false;
+        fireRate = normalFireRate;
+        Projectile.damage = normalDamage;
+
+        // Disable UI
+        if (boostCanvas != null)
+            boostCanvas.SetActive(false);
+    }
+
+    // ------------------------------------------------------
 }

@@ -89,9 +89,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PowerupPickup
   rotationSpeed: 45
-  boostDuration: 2
   damageMultiplier: 2
-  fireRateMultiplier: 0.8
+  fireRateMultiplier: 1
 --- !u!64 &-5653090532376869255
 MeshCollider:
   m_ObjectHideFlags: 0

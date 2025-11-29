@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
     public static int defaultDamage = 1;
 
     // Local per-projectile value
-    public int damage = 1;
+    public static int damage = 1;
 
     private void Start()
     {
