@@ -176,7 +176,7 @@ MonoBehaviour:
   damage: 1
   attackRange: 2
   attackCooldown: 0.2
-  agent: {fileID: 0}
+  agent: {fileID: 2552251430913988248}
 --- !u!114 &7930465718412619583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,6 +193,10 @@ MonoBehaviour:
   currentHealth: 0
   isBoss: 1
   healthBarPrefab: {fileID: 3741299242584195163, guid: c9030edfbbac0ff4286570c9a5a26e0d, type: 3}
+  flashDuration: 0.1
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  hitParticlePrefab: {fileID: 0}
+  deathParticlePrefab: {fileID: 9213485427418480076, guid: 330e19ea674ae144faac255955c25080, type: 3}
 --- !u!136 &1065961383537427008
 CapsuleCollider:
   m_ObjectHideFlags: 0
