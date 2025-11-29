@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Navigation Static
   - Enemy
+  - MusicManager
   layers:
   - Default
   - TransparentFX
