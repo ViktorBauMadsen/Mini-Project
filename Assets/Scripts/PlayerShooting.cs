@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PlayerShooting : MonoBehaviour
 {
+    [Header("Boost UI")]
+    public GameObject boostCanvas;
     [Header("Shooting")]
     public GameObject projectilePrefab;
     public Transform shootPoint;
