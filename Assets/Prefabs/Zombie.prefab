@@ -202,6 +202,9 @@ MonoBehaviour:
   deathParticlePrefab: {fileID: 9213485427418480076, guid: 330e19ea674ae144faac255955c25080, type: 3}
   powerupPrefab: {fileID: 3222157662275441889, guid: 310e5db8da8cbaf4e848455423610e23, type: 3}
   dropChance: 0.1
+  healthPickupPrefab: {fileID: 1180531706289291300, guid: bacedf3c52334264b92ebf4c6a017349, type: 3}
+  healthDropChance: 1
+  healthSpawnHeightOffset: 0.3
 --- !u!136 &1065961383537427008
 CapsuleCollider:
   m_ObjectHideFlags: 0
