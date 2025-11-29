@@ -23,6 +23,11 @@ public class EnemyHealth : MonoBehaviour
     public GameObject hitParticlePrefab;
     public GameObject deathParticlePrefab;
 
+    // 🔥 Added fields for powerup drop
+    [Header("Powerup Drop")]
+    public GameObject powerupPrefab;                // assign in inspector
+    [Range(0f, 1f)] public float dropChance = 0.05f; // default 5% chance
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -102,14 +107,33 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die()
     {
+        // Death particle
         if (deathParticlePrefab != null)
             Instantiate(deathParticlePrefab, transform.position, Quaternion.identity);
 
+        // 🔥 Try to drop powerup (added)
+        TryDropPowerup();
+
+        // Score
         ScoreManager.Instance.AddScore(1);
 
+        // Remove health bar
         if (healthBarUI != null)
             Destroy(healthBarUI.gameObject);
 
+        // Destroy enemy
         Destroy(gameObject);
+    }
+
+    // 🔥 Added method for powerup spawning
+    private void TryDropPowerup()
+    {
+        if (powerupPrefab == null) return;
+
+        float roll = Random.value; // number between 0 and 1
+        if (roll <= dropChance)
+        {
+            Instantiate(powerupPrefab, transform.position, Quaternion.identity);
+        }
     }
 }

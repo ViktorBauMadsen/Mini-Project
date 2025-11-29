@@ -53,6 +53,14 @@ public class PlayerHealth : MonoBehaviour
         CreateHearts();
         UpdateHeartsUI();
     }
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+
+        UpdateHeartsUI(); // or whatever updates your UI
+    }
 
     void CreateHearts()
     {
