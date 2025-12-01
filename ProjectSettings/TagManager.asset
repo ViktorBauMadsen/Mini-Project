@@ -7,6 +7,7 @@ TagManager:
   - Navigation Static
   - Enemy
   - MusicManager
+  - Pickups
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - 
   - PlayerBody
   - PlayerGun
-  - 
+  - Pickups
   - 
   - 
   - 

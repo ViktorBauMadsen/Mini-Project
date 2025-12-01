@@ -4,50 +4,45 @@ using TMPro;
 public class DamageUpgrade : MonoBehaviour
 {
     [Header("Upgrade Settings")]
-    public int baseCost = 50;
-    public float costMultiplier = 1.5f;
     public int damageIncrease = 1;
 
-    private int currentCost;
-
     [Header("References")]
-    public TMP_Text costText;             // Price ($)
-    public TMP_Text damageText;           // NEW: displays player damage
+    public TMP_Text costText;
+    public TMP_Text damageText;
     public PlayerShooting playerShooting;
 
     private void Start()
     {
-        currentCost = baseCost;
         UpdateUI();
     }
 
     public void BuyUpgrade()
     {
-        if (ScoreManager.Instance.money < currentCost)
+        int cost = UpgradeManager.Instance.currentDamageUpgradeCost;
+
+        // Not enough money
+        if (UpgradeManager.Instance.currentMoney < cost)
             return;
 
-        // Pay for upgrade
-        ScoreManager.Instance.AddMoney(-currentCost);
+        // Pay
+        UpgradeManager.Instance.currentMoney -= cost;
 
-        // Increase damage
-        playerShooting.normalDamage += damageIncrease;
+        // Increase damage & cost
+        UpgradeManager.Instance.ApplyDamageUpgrade(damageIncrease);
 
-        // Apply new projectile damage
-        Projectile.defaultDamage = playerShooting.normalDamage;
-        Projectile.damage = Projectile.defaultDamage;
+        // Apply new permanent damage
+        playerShooting.normalDamage = UpgradeManager.Instance.currentDamage;
+        Projectile.defaultDamage = UpgradeManager.Instance.currentDamage;
+        Projectile.damage = UpgradeManager.Instance.currentDamage;
 
-        // Increase next cost
-        currentCost = Mathf.RoundToInt(currentCost * costMultiplier);
-
+        // Refresh UI
         UpdateUI();
+        ScoreManager.Instance.UpdateUI();
     }
 
     private void UpdateUI()
     {
-        if (costText != null)
-            costText.text = currentCost + "$";
-
-        if (damageText != null)
-            damageText.text = "Damage: " + playerShooting.normalDamage;
+        costText.text = UpgradeManager.Instance.currentDamageUpgradeCost + "$";
+        damageText.text = "Damage: " + UpgradeManager.Instance.currentDamage;
     }
 }
