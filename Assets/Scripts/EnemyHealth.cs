@@ -23,15 +23,15 @@ public class EnemyHealth : MonoBehaviour
     public GameObject hitParticlePrefab;
     public GameObject deathParticlePrefab;
 
-    // 🔥 Existing boost powerup drop
+    // Boost powerup drop
     [Header("Powerup Drop")]
-    public GameObject powerupPrefab;                // assign in inspector
-    [Range(0f, 1f)] public float dropChance = 0.05f; // default 5% chance
+    public GameObject powerupPrefab;
+    [Range(0f, 1f)] public float dropChance = 0.05f;
 
-    // 🔥 NEW: Health item drop
+    // Health drop
     [Header("Health Drop")]
-    public GameObject healthPickupPrefab;               // assign in inspector
-    [Range(0f, 1f)] public float healthDropChance = 0.05f; // default 5%
+    public GameObject healthPickupPrefab;
+    [Range(0f, 1f)] public float healthDropChance = 0.05f;
 
     void Start()
     {
@@ -112,53 +112,41 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die()
     {
-        // Death particle
         if (deathParticlePrefab != null)
             Instantiate(deathParticlePrefab, transform.position, Quaternion.identity);
 
-        // 🔥 Drop boost powerup
         TryDropPowerup();
-
-        // 🔥 Drop health pickup
         TryDropHealthPickup();
 
-        // Score
         ScoreManager.Instance.AddScore(1);
 
-        // Remove health bar
         if (healthBarUI != null)
             Destroy(healthBarUI.gameObject);
 
-        // Destroy enemy
         Destroy(gameObject);
     }
-
-    // 🔥 Boost powerup drop method
+      
     private void TryDropPowerup()
     {
         if (powerupPrefab == null) return;
 
-        float roll = Random.value; // number between 0 and 1
+        float roll = Random.value;
         if (roll <= dropChance)
-        {
             Instantiate(powerupPrefab, transform.position, Quaternion.identity);
-        }
     }
 
-    // 🔥 NEW: Health pickup drop method
     private void TryDropHealthPickup()
     {
         if (healthPickupPrefab == null) return;
 
-        float roll = Random.value; // number between 0 and 1
+        float roll = Random.value;
         if (roll <= healthDropChance)
         {
             Instantiate(
-              healthPickupPrefab,
-              new Vector3(transform.position.x, 1f, transform.position.z),
-             Quaternion.identity
-             );
-
+                healthPickupPrefab,
+                new Vector3(transform.position.x, 1f, transform.position.z),
+                Quaternion.identity
+            );
         }
     }
 }

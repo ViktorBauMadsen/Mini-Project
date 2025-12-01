@@ -123,6 +123,8 @@ public class PlayerShooting : MonoBehaviour
 
     // ---------------- BOOST FUNCTIONALITY ----------------
 
+    // ---------------- BOOST FUNCTIONALITY ----------------
+
     public void ActivateBoost(float duration)
     {
         // Prevent stacking
@@ -131,9 +133,8 @@ public class PlayerShooting : MonoBehaviour
 
         boostActive = true;
 
-        // Apply boosted stats
+        // Apply boosted fire rate ONLY
         fireRate = boostedFireRate;
-        Projectile.damage = boostedDamage;
 
         // Enable UI
         if (boostCanvas != null)
@@ -149,7 +150,6 @@ public class PlayerShooting : MonoBehaviour
         // Reset to original stats
         boostActive = false;
         fireRate = normalFireRate;
-        Projectile.damage = normalDamage;
 
         // Disable UI
         if (boostCanvas != null)
@@ -157,4 +157,5 @@ public class PlayerShooting : MonoBehaviour
     }
 
     // ------------------------------------------------------
+
 }

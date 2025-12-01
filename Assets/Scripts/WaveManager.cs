@@ -50,7 +50,6 @@ public class WaveManager : MonoBehaviour
         waveText.text = $"Wave: {currentWave}";
 
         int enemiesToSpawn = 2 + currentWave; // normal wave scaling
-
         float speedBonus = currentWave * 0.1f;
 
         // -------------------------
@@ -70,9 +69,11 @@ public class WaveManager : MonoBehaviour
             EnemyHealth hp = enemy.GetComponent<EnemyHealth>();
             if (hp != null)
             {
-                // Normal scaling
-                if (currentWave % 5 == 0)
-                    hp.maxHealth++;
+                // -----------------------------------------
+                // NEW BALANCED HP SCALING
+                // Base HP = 3, +0.5 per wave (rounded)
+                // -----------------------------------------
+                hp.maxHealth = Mathf.RoundToInt(3 + (currentWave - 1) * 0.5f);
 
                 hp.currentHealth = hp.maxHealth;
             }
@@ -104,6 +105,8 @@ public class WaveManager : MonoBehaviour
         if (hp != null)
         {
             hp.isBoss = true;
+
+            // BOSS SCALING (your original logic — works great)
             hp.maxHealth = bossBaseHealth + (currentWave * bossHealthPerWave);
             hp.currentHealth = hp.maxHealth;
         }
