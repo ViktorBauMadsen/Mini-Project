@@ -505,8 +505,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeManager
   currentDamage: 1
-  currentDamageUpgradeCost: 50
+  currentDamageUpgradeCost: 200
   damageUpgradeCostMultiplier: 1.5
+  currentMoney: 0
 --- !u!4 &870862514
 Transform:
   m_ObjectHideFlags: 0
