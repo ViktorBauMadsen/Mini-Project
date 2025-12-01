@@ -1457,7 +1457,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 92cf0b04b55dc1b4f8daaa748c8f0fca, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.8
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3324,8 +3324,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   playerCamera: {fileID: 330585545}
   walkSpeed: 6
-  runSpeed: 12
-  jumpPower: 7
+  runSpeed: 8
+  jumpPower: 0
   gravity: 10
   lookSpeed: 2
   lookXLimit: 45
@@ -7470,7 +7470,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.7
+  m_Volume: 0.9
   m_Pitch: 1
   Loop: 0
   Mute: 0
