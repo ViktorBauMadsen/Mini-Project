@@ -16,15 +16,19 @@ public class PowerupPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Try to get PlayerShooting component from the player
+        // Only the player can pick this up
+        if (!other.CompareTag("Player"))
+            return;
+
+        // Try to get PlayerShooting from the player
         PlayerShooting shooting = other.GetComponentInParent<PlayerShooting>();
 
         if (shooting != null)
         {
-            shooting.ActivateBoost(boostDuration);   // Use NEW boost system
+            shooting.ActivateBoost(boostDuration);
         }
 
-        // Destroy the pickup after collection
+        // Destroy the pickup
         Destroy(gameObject);
     }
 }
