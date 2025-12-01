@@ -18,6 +18,19 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene(index);
     }
 
+    // New: load the first scene (build index 0)
+    public void LoadFirstScene()
+    {
+        if (SceneManager.sceneCountInBuildSettings > 0)
+        {
+            SceneManager.LoadScene(0);
+        }
+        else
+        {
+            Debug.LogWarning("SceneLoader: No scenes found in Build Settings. Cannot load scene 0.");
+        }
+    }
+
     // Optional: quit game
     public void QuitGame()
     {
