@@ -160,7 +160,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 4
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -176,8 +176,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59280b6b730015a408ed87d830d42b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  damage: 1
-  attackRange: 2
+  damage: 2
+  attackRange: 3
   attackCooldown: 0.2
   agent: {fileID: 2552251430913988248}
 --- !u!114 &7930465718412619583
@@ -201,9 +201,9 @@ MonoBehaviour:
   hitParticlePrefab: {fileID: 0}
   deathParticlePrefab: {fileID: 9213485427418480076, guid: 330e19ea674ae144faac255955c25080, type: 3}
   powerupPrefab: {fileID: 3222157662275441889, guid: 310e5db8da8cbaf4e848455423610e23, type: 3}
-  dropChance: 0.5
+  dropChance: 0.6
   healthPickupPrefab: {fileID: 1180531706289291300, guid: bacedf3c52334264b92ebf4c6a017349, type: 3}
-  healthDropChance: 0.5
+  healthDropChance: 0.6
 --- !u!136 &1065961383537427008
 CapsuleCollider:
   m_ObjectHideFlags: 0
