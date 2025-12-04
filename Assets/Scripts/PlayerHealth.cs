@@ -7,40 +7,55 @@ using System.Collections.Generic;
 public class PlayerHealth : MonoBehaviour
 {
     [Header("Health")]
+    // Total HP
     public int maxHealth = 5;         // total health in "HP"
+    // Current HP
     public int currentHealth;         // HP changes
+    // How many HP per heart icon
     public int healthPerHeart = 2;    // 2 = full heart
 
     [Header("UI")]
+    // UI shown on defeat
     public GameObject defeatUI;
+    // Full-screen damage flash image
     public Image damageFlashImage;
 
     [Header("Hearts UI")]
+    // Heart prefab to instantiate
     public GameObject heartPrefab;        // assign your Heart prefab
+    // Container for heart icons
     public Transform heartsContainer;     // where hearts will appear
+    // Heart sprites
     public Sprite fullHeart;
     public Sprite halfHeart;
     public Sprite emptyHeart;
 
     [Header("Damage Flash Settings")]
+    // Speed the flash fades out
     public float flashFadeSpeed = 5f;
+    // Max alpha for the flash
     public float flashMaxAlpha = 0.35f;
 
+    // Internal alpha value for flash
     private float flashAlpha = 0f;
+    // Is the player dead?
     private bool isDead = false;
 
     private PlayerMovement movement;
+    // Cached heart images
     private List<Image> heartImages = new List<Image>();
 
 
     void Start()
     {
+        // Initialize health
         currentHealth = maxHealth;
 
+        // Hide defeat UI at start
         if (defeatUI != null)
             defeatUI.SetActive(false);
 
-        // reset flash alpha
+        // Reset flash alpha
         if (damageFlashImage != null)
         {
             Color c = damageFlashImage.color;
@@ -53,15 +68,17 @@ public class PlayerHealth : MonoBehaviour
         CreateHearts();
         UpdateHeartsUI();
     }
+    // Heal the player
     public void Heal(int amount)
     {
         currentHealth += amount;
         if (currentHealth > maxHealth)
             currentHealth = maxHealth;
 
-        UpdateHeartsUI(); // or whatever updates your UI
+        UpdateHeartsUI(); // or whatever updates your UI            
     }
 
+    // Create heart icons based on max health
     void CreateHearts()
     {
         int heartCount = Mathf.CeilToInt(maxHealth / (float)healthPerHeart);
@@ -74,6 +91,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    // Update heart sprites to reflect current HP
     void UpdateHeartsUI()
     {
         int hp = currentHealth;
@@ -100,6 +118,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
+        // Fade damage flash over time
         if (flashAlpha > 0)
         {
             flashAlpha -= Time.unscaledDeltaTime * flashFadeSpeed;
@@ -110,17 +129,20 @@ public class PlayerHealth : MonoBehaviour
             damageFlashImage.color = c;
         }
 
+        // Press R to restart after death
         if (isDead && Input.GetKeyDown(KeyCode.R))
         {
             RestartGame();
         }
     }
 
+    // Apply damage to player
     public void TakeDamage(int amount)
     {
         if (isDead) return;
 
         currentHealth -= amount;
+        // Trigger flash
         flashAlpha = 1f;
 
         UpdateHeartsUI(); // ❤️ NEW
@@ -131,6 +153,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    // Handle player death
     void Die()
     {
         isDead = true;
@@ -147,6 +170,7 @@ public class PlayerHealth : MonoBehaviour
         Cursor.visible = false;
     }
 
+    // Restart the current scene
     void RestartGame()
     {
         Time.timeScale = 1f;

@@ -4,23 +4,33 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
+    // Max health
     public int maxHealth = 3;
+    // Current health (hidden in inspector)
     [HideInInspector] public int currentHealth;
 
+    // Is this a boss?
     public bool isBoss = false;
 
+    // Prefab for world-space health bar
     public GameObject healthBarPrefab;
     private EnemyHealthBarUI healthBarUI;
 
     [Header("Damage Flash")]
+    // How long the damage flash lasts
     public float flashDuration = 0.1f;
+    // Color used when flashing on hit
     public Color flashColor = Color.red;
 
+    // Renderers to flash
     private Renderer[] renderers;
+    // Original colors for restoring after flash
     private List<Color[]> originalColors = new List<Color[]>();
 
     [Header("Particles")]
+    // Particle shown on hit
     public GameObject hitParticlePrefab;
+    // Particle shown on death
     public GameObject deathParticlePrefab;
 
     // Boost powerup drop
@@ -28,15 +38,17 @@ public class EnemyHealth : MonoBehaviour
     public GameObject powerupPrefab;
     [Range(0f, 1f)] public float dropChance = 0.05f;
 
-    // Health drop
+    // Health pickup drop
     [Header("Health Drop")]
     public GameObject healthPickupPrefab;
     [Range(0f, 1f)] public float healthDropChance = 0.05f;
 
     void Start()
     {
+        // Initialize health
         currentHealth = maxHealth;
 
+        // Spawn health bar UI if provided
         if (healthBarPrefab != null)
         {
             GameObject bar = Instantiate(healthBarPrefab);
@@ -44,6 +56,7 @@ public class EnemyHealth : MonoBehaviour
             healthBarUI.enemy = this;
         }
 
+        // Cache renderers and store original colors
         renderers = GetComponentsInChildren<Renderer>();
 
         foreach (Renderer r in renderers)
@@ -63,6 +76,7 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
+    // Apply damage to this enemy
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
@@ -79,6 +93,7 @@ public class EnemyHealth : MonoBehaviour
             Die();
     }
 
+    // Flash enemy materials briefly when hit
     private IEnumerator DamageFlash()
     {
         for (int rIndex = 0; rIndex < renderers.Length; rIndex++)
@@ -110,6 +125,7 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
+    // Handle death: particles, drops, scoring, cleanup
     private void Die()
     {
         if (deathParticlePrefab != null)
@@ -126,6 +142,7 @@ public class EnemyHealth : MonoBehaviour
         Destroy(gameObject);
     }
       
+    // Maybe drop a powerup based on chance
     private void TryDropPowerup()
     {
         if (powerupPrefab == null) return;
@@ -135,6 +152,7 @@ public class EnemyHealth : MonoBehaviour
             Instantiate(powerupPrefab, transform.position, Quaternion.identity);
     }
 
+    // Maybe drop a health pickup based on chance
     private void TryDropHealthPickup()
     {
         if (healthPickupPrefab == null) return;

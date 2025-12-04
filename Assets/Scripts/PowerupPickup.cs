@@ -1,11 +1,14 @@
 using UnityEngine;
 
+// Simple pickup that gives the player a temporary boost
 public class PowerupPickup : MonoBehaviour
 {
     [Header("Visuals")]
+    // Rotation speed for the floating pickup
     public float rotationSpeed = 45f;
 
     [Header("Boost Settings")]
+    // How long the boost lasts (seconds)
     public float boostDuration = 20f;   // How long the boost lasts
 
     private void Update()
@@ -20,7 +23,7 @@ public class PowerupPickup : MonoBehaviour
         if (!other.CompareTag("Player"))
             return;
 
-        // Try to get PlayerShooting from the player
+        // Try to get PlayerShooting from the player and activate boost
         PlayerShooting shooting = other.GetComponentInParent<PlayerShooting>();
 
         if (shooting != null)
@@ -28,7 +31,7 @@ public class PowerupPickup : MonoBehaviour
             shooting.ActivateBoost(boostDuration);
         }
 
-        // Destroy the pickup
+        // Remove the pickup after use
         Destroy(gameObject);
     }
 }
