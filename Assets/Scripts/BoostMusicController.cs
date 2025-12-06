@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class BoostMusicController : MonoBehaviour
 {
+    // AudioSource to play during boost
     public AudioSource boostMusic;
+    // Reference to the normal game music
     private AudioSource normalMusic;
 
     private void Awake()
     {
-        // Find the music manager by tag
+        // Find the music manager by tag and cache its AudioSource
         GameObject mm = GameObject.FindWithTag("MusicManager");
         if (mm != null)
             normalMusic = mm.GetComponent<AudioSource>();

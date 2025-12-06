@@ -2,10 +2,12 @@ using UnityEngine;
 
 public class MusicManager : MonoBehaviour
 {
+    // Singleton instance
     private static MusicManager instance;
 
     void Awake()
     {
+        // If no instance exists, set this and keep it across scenes
         if (instance == null)
         {
             instance = this;
@@ -13,6 +15,7 @@ public class MusicManager : MonoBehaviour
         }
         else
         {
+            // If another instance exists, destroy this duplicate
             Destroy(gameObject);             // prevent duplicates
         }
     }

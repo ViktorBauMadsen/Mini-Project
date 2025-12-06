@@ -5,17 +5,23 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
+    // Camera used for looking
     public Camera playerCamera;
+    // Movement speeds
     public float walkSpeed = 6f;
     public float runSpeed = 12f;
+    // Jump strength and gravity
     public float jumpPower = 7f;
     public float gravity = 10f;
+    // Mouse look settings
     public float lookSpeed = 2f;
     public float lookXLimit = 45f;
+    // Heights for standing / crouching
     public float defaultHeight = 2f;
     public float crouchHeight = 1f;
     public float crouchSpeed = 3f;
 
+    // Movement state
     private Vector3 moveDirection = Vector3.zero;
     private float rotationX = 0;
     private CharacterController characterController;
@@ -23,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canMove = true;
     private bool isFrozen = false;
 
+    // Animator inside child for movement animations (optional)
     // 🔥 NEW
     private Animator anim;
 
@@ -30,24 +37,28 @@ public class PlayerMovement : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
 
+        // Get Animator from children (if present)
         // 🔥 Get the Animator inside MafiaBoss child
         anim = GetComponentInChildren<Animator>();
     }
 
     void OnEnable()
     {
+        // Lock cursor when enabled
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     void OnDisable()
     {
+        // Release cursor when disabled
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
 
     public void FreezePlayer()
     {
+        // Prevent movement and stop animations
         isFrozen = true;
         canMove = false;
 
@@ -71,6 +82,7 @@ public class PlayerMovement : MonoBehaviour
         float curSpeedX = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Vertical") : 0;
         float curSpeedY = canMove ? (isRunning ? runSpeed : walkSpeed) * Input.GetAxis("Horizontal") : 0;
 
+        // Simple animation flag for movement
         // 🔥 ANIMATION LOGIC
         bool isMoving = (Mathf.Abs(curSpeedX) > 0.1f || Mathf.Abs(curSpeedY) > 0.1f);
 
@@ -80,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
+        // Jump
         if (Input.GetButton("Jump") && canMove && characterController.isGrounded)
         {
             moveDirection.y = jumpPower;
@@ -89,11 +102,13 @@ public class PlayerMovement : MonoBehaviour
             moveDirection.y = movementDirectionY;
         }
 
+        // Apply gravity when not grounded
         if (!characterController.isGrounded)
         {
             moveDirection.y -= gravity * Time.deltaTime;
         }
 
+        // Crouch handling (adjust height and speeds)
         if (Input.GetKey(KeyCode.LeftControl) && canMove)
         {
             characterController.height = crouchHeight;
@@ -107,8 +122,10 @@ public class PlayerMovement : MonoBehaviour
             runSpeed = 12f;
         }
 
+        // Move the character
         characterController.Move(moveDirection * Time.deltaTime);
 
+        // Mouse look and rotation
         if (canMove)
         {
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
